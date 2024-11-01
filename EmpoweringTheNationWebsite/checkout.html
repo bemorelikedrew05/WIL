@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Empowering The Nation</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html"><img src="assets/empowering-logo.png" alt="Empowering The Nation Logo"></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="six-month-courses.html">6 Month Courses</a></li>
+                <li><a href="six-week-courses.html">6 Week Courses</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Checkout</h2>
+        <form id="checkout-form">
+            <div class="checkout-item">
+                <label for="course-selection">Select Courses (use Ctrl/Cmd + Click to select multiple):</label>
+                <select id="course-selection" multiple>
+                    <option value="1000">First Aid (R1000)</option>
+                    <option value="750">Child Minding (R750)</option>
+                    <option value="750">Cooking (R750)</option>
+                    <option value="750">Garden Maintenance (R750)</option>
+                    <option value="1000">Sewing (R1000)</option>
+                    <option value="1000">Landscaping (R1000)</option>
+                    <option value="1000">Life Skills (R1000)</option>
+                </select>
+            </div>
+
+            <div class="checkout-item">
+                <label for="total-amount">Total Amount:</label>
+                <input type="text" id="total-amount" value="R0" readonly>
+            </div>
+
+            <div class="checkout-item">
+                <label for="discount">Discount Applied:</label>
+                <input type="text" id="discount" value="0%" readonly>
+            </div>
+
+            <div class="checkout-item">
+                <label for="final-amount">Final Amount After Discount:</label>
+                <input type="text" id="final-amount" value="R0" readonly>
+            </div>
+
+            <button type="button" class="btn-primary" onclick="calculateTotal()">Calculate Total</button>
+            <button type="submit" class="btn-primary">Proceed to Payment</button>
+        </form>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>© 2024 Empowering The Nation. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function calculateTotal() {
+            const courseSelection = document.getElementById('course-selection');
+            const totalAmount = document.getElementById('total-amount');
+            const discountField = document.getElementById('discount');
+            const finalAmount = document.getElementById('final-amount');
+
+            let selectedCourses = Array.from(courseSelection.selectedOptions);
+            let total = 0;
+
+            selectedCourses.forEach(option => {
+                total += parseInt(option.value);
+            });
+
+            let discount = 0;
+            if (selectedCourses.length === 2) {
+                discount = 5
+            } else if (selectedCourses.length === 3) {
+                discount = 10;
+            } else if (selectedCourses.length >= 4) {
+                discount = 15;
+            }
+
+            let discountAmount = (discount / 100) * total;
+            let finalTotal = total - discountAmount;
+
+            totalAmount.value = `R${total}`;
+            discountField.value = `${discount}%`;
+            finalAmount.value = `R${finalTotal.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
